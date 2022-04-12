@@ -11,15 +11,11 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/ionic-team/ionic-framework/blob/main/LICENSE">
+  <a href="https://github.com/Amgelo563/nyx/blob/main/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Nyx is released under the MIT license." />
   </a>
-  <a href="https://github.com/ionic-team/ionic/blob/main/.github/CONTRIBUTING.md">
-    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
-  </a>
-  <a href="https://github.com/ionic-team/ionic/blob/main/.github/CONTRIBUTING.md">
-    <img src="https://img.shields.io/badge/Forks-welcome-brightgreen.svg" alt="PRs welcome!" />
-  </a>
+  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
+  <img src="https://img.shields.io/badge/Forks-welcome-brightgreen.svg" alt="PRs welcome!" />
 </p>
 
 ## 📚 Introduction
