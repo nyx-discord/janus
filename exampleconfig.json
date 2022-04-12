@@ -1,0 +1,8 @@
+{
+    "DISCORD_TOKEN": "TOKEN",
+    "COMMAND_PREFIXES": [
+        "!",
+        "&"
+    ],
+    "DATABASE": "DB_URL"
+}
