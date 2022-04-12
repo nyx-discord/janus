@@ -27,7 +27,6 @@ The bot is 100% working just by cloning the repo, installing dependencies and se
 
 This template is greatly inspired by [Modbot](https://github.com/aternosorg/modbot).
 
-
 ## ✨ Features
 All of these features are included on the template. You can modify each of them to your liking or add more of them.
 
@@ -56,6 +55,9 @@ All of these features are included on the template. You can modify each of them 
 * Built-in [Prisma](https://www.prisma.io/) support for easier and faster database managing.
 * Built-in [Tracer](https://www.npmjs.com/package/tracer) support for powerful logging.
 * *(Theorically but not really practical?)* Support for multiple bots running at once.
+
+## 📖 Usage
+[Refer to the Wiki for steps to use the template.](https://github.com/Amgelo563/nyx/wiki)
 
 ## 🚧 Disclaimers
 * To avoid meaningless commands, only the first name is used to register slash commands. The rest only work for message commands.
