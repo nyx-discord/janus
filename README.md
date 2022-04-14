@@ -8,6 +8,8 @@
 
 <p align="center">
   Nyx is a Discord bot template written in Typescript, supporting most of Discord.js' features alongside tools useful for bot development.
+  <br>
+  <a href = "https://github.com/Amgelo563/nyx/blob/main/README_es.md"><b>🇪🇸 README en Español</b></a>
 </p>
 
 <p align="center">
@@ -58,6 +60,22 @@ All of these features are included on the template. You can modify each of them 
 
 ## 📖 Usage
 [Refer to the Wiki for steps to use the template.](https://github.com/Amgelo563/nyx/wiki)
+
+## 🌐 License
+
+[LICENSE](https://github.com/Amgelo563/nyx/blob/main/LICENSE)
+
+Nyx is licensed under the MIT License, linked above.
+
+If you don't want to bother reading it all, here's what you need to know:
+
+* **✅ You can:** Modify the software for your personal or public usage, distribute it freely and/or commercially.
+
+* **❌ You can't:** Change the license, though you can include it inside a proyect with a more restrictive license, but the original code stays licensed under MIT.
+
+* **📝 You need:** To include the copyright (LICENSE file) inside the modified code.
+
+You don't need to explicitly give credit to this repository (all the credit is inside LICENSE already), but I'll be grateful if you do so 💙.
 
 ## 🚧 Disclaimers
 * To avoid meaningless commands, only the first name is used to register slash commands. The rest only work for message commands.
