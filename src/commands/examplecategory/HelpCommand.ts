@@ -1,6 +1,5 @@
 import {
   MessageEmbed,
-  CommandInteractionOption,
   AutocompleteInteraction,
   ApplicationCommandOptionData,
 } from 'discord.js';
@@ -95,21 +94,6 @@ export default class HelpCommand extends Command {
         description: 'Optional subcommand',
         required: false,
         autocomplete: true,
-      },
-    ];
-  }
-
-  override parseOptions(args: string[]): CommandInteractionOption[] {
-    return [
-      {
-        name: 'command',
-        type: 'STRING',
-        value: args.shift()?.toLowerCase(),
-      },
-      {
-        name: 'subcommand',
-        type: 'STRING',
-        value: args.shift()?.toLowerCase(),
       },
     ];
   }

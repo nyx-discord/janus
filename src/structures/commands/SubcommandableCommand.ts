@@ -1,7 +1,5 @@
 import {
   ApplicationCommandOptionData,
-  CommandInteractionOption,
-  CommandInteractionOptionResolver,
   MessageEmbed,
 } from 'discord.js';
 
@@ -52,15 +50,6 @@ export default abstract class SubcommandableCommand extends Command {
     return embed;
   }
 
-  override parseOptions(args: string[]): CommandInteractionOption[] {
-    const name = args.shift() as string;
-    return [{
-      type: 'SUB_COMMAND',
-      name,
-      options: this.getSubCommand(name)?.parseOptions(args),
-    }];
-  }
-
   /** Get the executed subcommand */
   public getSubCommand(name: string): SubCommand | null {
     if (this.subCommand) return this.subCommand;
@@ -77,7 +66,7 @@ export default abstract class SubcommandableCommand extends Command {
   }
 
   override async execute() {
-    this.getSubCommand((this.options as CommandInteractionOptionResolver).getSubcommand(false) as string);
+    this.getSubCommand((this.options).getSubcommand(false) as string);
     if (!this.subCommand) {
       await this.sendUsage();
       return;

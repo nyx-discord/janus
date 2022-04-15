@@ -1,6 +1,4 @@
-import {
-  ApplicationCommandOptionData, CommandInteractionOption, MessageEmbed,
-} from 'discord.js';
+import { ApplicationCommandOptionData, MessageEmbed } from 'discord.js';
 import Command from '../../structures/commands/Command';
 import { CommandData } from '../../structures/types';
 
@@ -52,15 +50,5 @@ This example command is also marked as guildOnly, so it won't work on DMs.`)
       default:
         return [];
     }
-  }
-
-  override parseOptions(args: string[]): CommandInteractionOption[] {
-    return [
-      {
-        name: 'option',
-        type: 'STRING',
-        value: args.shift(),
-      },
-    ];
   }
 }

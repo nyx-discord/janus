@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionData, CommandInteractionOption } from 'discord.js';
+import { ApplicationCommandOptionData } from 'discord.js';
 
 import SubCommand from '../../../structures/commands/SubCommand';
 import { CommandData } from '../../../structures/types';
@@ -30,16 +30,6 @@ export default class DatabaseSetSubcommand extends SubCommand {
         type: 'STRING',
         description: 'Your name to set on the database',
         required: true,
-      },
-    ];
-  }
-
-  override parseOptions(args: string[]): CommandInteractionOption[] {
-    return [
-      {
-        name: 'name',
-        type: 'STRING',
-        value: args.shift(),
       },
     ];
   }

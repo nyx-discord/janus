@@ -2,9 +2,11 @@ import { Message, MessageEmbed } from 'discord.js';
 
 import CommandSource from '../../structures/commands/CommandSource';
 import { Colors, Symbols } from '../../utils/Constants';
-import { sendTemporal, canMemberExecute } from '../../utils/DiscordUtils';
+import { sendTemporal, canMemberExecute, getMessageOptions } from '../../utils/DiscordUtils';
 import { getCommandName } from '../../utils/CommandUtils';
 import Event from '../../structures/Event';
+import MessageArgumentsParser from '../../MessageArgumentsParser';
+import { split } from '../../utils/StringUtils';
 
 export default class CommandsExecutor extends Event {
   override async run(message: Message) {
@@ -33,11 +35,32 @@ ${missingPerms.missingPerms}
       return;
     }
 
+    if (!parsedMessage.prefix || !parsedMessage.name || !parsedMessage.args) return;
+
     const source = new CommandSource(message);
+
+    const MessageArgsParser = new MessageArgumentsParser(
+      source.getRaw() as Message<true>,
+      split((source.getRaw() as Message<true>).content.substring(parsedMessage.prefix.length + parsedMessage.name.length)),
+      CommandClass,
+      CommandClass.getOptions(),
+    );
+
+    const optionResolver = await MessageArgsParser.process();
+    if (!optionResolver) {
+      await message.reply(getMessageOptions(CommandClass.data, source, CommandClass.getUsage(parsedMessage.prefix as string)));
+      return;
+    }
 
     // FIXME The type is somehow wrong here, CommandClass appears as AbstractCommand, when it's actually a subclass of it.
     // @ts-ignore See above
-    const cmd = new CommandClass(this.bot, parsedMessage.name, source, parsedMessage.prefix);
+    const cmd = new CommandClass(
+      this.bot,
+      parsedMessage.name,
+      source,
+      parsedMessage.prefix,
+      optionResolver,
+    );
     await cmd.execute();
   }
 }

@@ -2,16 +2,12 @@ import {
   ApplicationCommandOptionData,
   AutocompleteInteraction,
   CommandInteraction,
-  CommandInteractionOption,
   CommandInteractionOptionResolver,
-  InteractionReplyOptions,
   Message,
   MessageActionRow,
   MessageAttachment,
   MessageEmbed,
   MessageOptions,
-  ReplyMessageOptions,
-  Util,
 } from 'discord.js';
 
 import Bot from '../../Bot';
@@ -22,7 +18,7 @@ import {
 } from '../types';
 import CommandSource from './CommandSource';
 import { Colors, Symbols } from '../../utils/Constants';
-import { sendTemporal } from '../../utils/DiscordUtils';
+import { getMessageOptions, sendTemporal } from '../../utils/DiscordUtils';
 
 /* A Command, Subcommand group or SubCommand */
 export default abstract class AbstractCommand {
@@ -67,14 +63,6 @@ export default abstract class AbstractCommand {
 
   /** Execute this command */
   public abstract execute(): Promise<unknown>;
-
-  /**
-     * Returns the options to be used to create a new
-     * CommandInteractionOptionResolver on message commands
-     */
-  public parseOptions(_: string[]): CommandInteractionOption[] {
-    return [];
-  }
 
   /** This lets access static members from a non static view (https://github.com/Microsoft/TypeScript/issues/3841) */
   protected getConstructor() {
@@ -121,44 +109,6 @@ export default abstract class AbstractCommand {
 
   /** Utility to get the MessageOptions from the message and additions specified */
   protected getMessageOptions(message: BaseOptions, ...additions: Array<MessageEmbed | MessageAttachment | MessageActionRow>): MessageOptions {
-    let options: MessageOptions | ReplyMessageOptions | InteractionReplyOptions = {};
-
-    if (typeof message === 'string') {
-      options.content = message;
-    } else if (message instanceof MessageEmbed || message instanceof MessageAttachment || message instanceof MessageActionRow) {
-      if (message instanceof MessageEmbed) {
-        if (!message.color) message.setColor(Util.resolveColor(this.getConstructor().data.defaultColor));
-        if (!message.footer) {
-          message.setFooter(
-            {
-              text: `Executed by ${Util.escapeMarkdown(this.source.getUser().tag)}`,
-              iconURL: this.source.getUser().avatarURL() as string,
-            },
-          );
-        }
-        message.setTimestamp();
-      }
-      additions.unshift(message);
-    } else if (typeof message === 'object') {
-      options = message as MessageOptions;
-    }
-
-    options.embeds ??= [];
-    options.embeds = options.embeds.concat((additions as MessageEmbed[]).filter((a) => a instanceof MessageEmbed));
-
-    options.files ??= [];
-    options.files = options.files.concat((additions as MessageAttachment[]).filter((a) => a instanceof MessageAttachment));
-
-    options.components ??= [];
-    options.components = options.components.concat((additions as MessageActionRow[]).filter((a) => a instanceof MessageActionRow));
-    if (this.getConstructor().data.ephemeral) {
-      (options as InteractionReplyOptions).ephemeral ??= true;
-    }
-
-    if (!this.source.isInteraction) {
-      (options as ReplyMessageOptions).failIfNotExists ??= false;
-      (options as ReplyMessageOptions).allowedMentions ??= { repliedUser: false };
-    }
-    return options;
+    return getMessageOptions(this.getConstructor().data, this.source, message, ...additions);
   }
 }

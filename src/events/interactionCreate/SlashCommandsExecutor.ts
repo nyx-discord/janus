@@ -35,7 +35,7 @@ ${missingPerms.missingPerms}
 
     // FIXME The type is somehow wrong here, CommandClass appears as AbstractCommand, when it's actually a subclass of it.
     // @ts-ignore See above
-    const cmd = new CommandClass(this.bot, name, source, '/');
+    const cmd = new CommandClass(this.bot, name, source, '/', interaction.options);
     await cmd.execute();
   }
 }

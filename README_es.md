@@ -43,7 +43,7 @@ Todas estas características están incluidas en la plantilla. Puedes modificar 
 ### Comandos
 * Soporte de comandos de mensajes y slash commands con solo una declaración.
 * Soporte de subcomandos, registrados también en Discord.
-* Usa tu propio parseo de argumentos en comandos de texto, y el proveído por Discord en slash commands.
+* Parseo automático de argumentos en comandos de texto a un [CommandInteractionOptionResolver](https://discord.js.org/#/docs/main/stable/class/CommandInteractionOptionResolver).
 * Soporte de aliases de comandos (solo en comandos de mensaje), descripciones de comando y sintaxis de comandos.
 * Soporte para múltiples prefixes.
 * Soporte automático de categorías de comandos.

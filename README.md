@@ -43,7 +43,7 @@ All of these features are included on the template. You can modify each of them 
 ### Commands
 * Both message and slash command support with only one declaration.
 * Subcommand support, registered on Discord as well.
-* Add your own argument parsing for message commands, and the one already provided by Discord for interactions.
+* Automatic argument parsing on message commands to a [CommandInteractionResolver](https://discord.js.org/#/docs/main/stable/class/CommandInteractionOptionResolver).
 * Command aliases (only message commands), command description and command syntax support.
 * Multiple prefixes support.
 * Command categories support based on folder names.

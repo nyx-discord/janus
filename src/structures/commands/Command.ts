@@ -1,5 +1,4 @@
 import {
-  Message,
   MessageEmbed,
   CommandInteractionOptionResolver,
 } from 'discord.js';
@@ -7,7 +6,6 @@ import {
 import AbstractCommand from './AbstractCommand';
 
 import CommandSource from './CommandSource';
-import { split } from '../../utils/StringUtils';
 
 import Bot from '../../Bot';
 
@@ -16,19 +14,10 @@ export default abstract class Command extends AbstractCommand {
   /** The name used when this command was called */
   protected name: string;
 
-  constructor(bot: Bot, name: string, source: CommandSource, prefix: string) {
+  constructor(bot: Bot, name: string, source: CommandSource, prefix: string, options: CommandInteractionOptionResolver) {
     super(bot, source, prefix);
     this.name = name;
-
-    if (source.isInteraction) {
-      this.options = source.getOptions() as CommandInteractionOptionResolver;
-    } else {
-      const args = split((source.getRaw() as Message<true>)
-        .content
-        .substring(prefix.length + name.length));
-      // @ts-ignore Typescript is right about this one, but I haven't found any other good way to achieve this
-      this.options = new CommandInteractionOptionResolver(bot.client, this.parseOptions(args));
-    }
+    this.options = options;
   }
 
   /** Supported context menu types */
