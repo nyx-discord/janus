@@ -31,7 +31,7 @@
     "@typescript-eslint/parser": "5.10.1",
     "eslint": "8.14.0",
     "eslint-config-airbnb-base": "15.0.0",
-    "eslint-config-airbnb-typescript": "16.1.0",
+    "eslint-config-airbnb-typescript": "16.2.0",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jsdoc": "37.7.0",
     "ts-node": "10.7.0",
