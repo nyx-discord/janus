@@ -1,9 +1,20 @@
 import {
   ApplicationCommandOptionData,
-  ApplicationCommandOptionType, Collection,
-  CommandInteractionOption, CommandInteractionOptionResolver, CommandInteractionResolvedData, GuildBasedChannel, GuildMember,
-  Message, Role, Snowflake, TextChannel, User,
+  ApplicationCommandOptionType,
+  Collection,
+  CommandInteractionOption,
+  CommandInteractionOptionResolver,
+  CommandInteractionResolvedData,
+  ExcludeEnum,
+  GuildBasedChannel,
+  GuildMember,
+  Message,
+  Role,
+  Snowflake,
+  TextChannel,
+  User,
 } from 'discord.js';
+import { ChannelTypes } from 'discord.js/typings/enums';
 
 import {
   mentionToUser,
@@ -89,12 +100,14 @@ export default class MessageArgumentsParser {
           // ! There might be channels outside guilds? Still need to find an applicable use and how one could mention this in a message
           if (!guild) return false;
           const channel = await mentionToChannel(input, guild);
+          const channelTypes: ExcludeEnum<typeof ChannelTypes, 'UNKNOWN'>[] | Exclude<ChannelTypes, ChannelTypes.UNKNOWN>[] | undefined = expected.channelTypes ?? expected.channel_types;
+          const channelEnum = Boolean(expected.channel_types && !expected.channelTypes);
 
           // ? Channel required but no channel found, exit
           if (!channel && (expected.required || expected.channel_types)) return false;
 
           // ? Channel not required but found, channel types not specified, push
-          if (channel && !expected.channel_types) {
+          if (channel && !channelTypes) {
             baseOption.channel = channel as GuildBasedChannel;
             baseOption.value = channel.id;
             optionsResult[index] = baseOption;
@@ -102,7 +115,7 @@ export default class MessageArgumentsParser {
           }
 
           // ? Channel found and of types specified, push
-          if (channel && channel.type !== 'UNKNOWN' && expected.channel_types && expected.channel_types.includes(resolveChannelType(channel.type))) {
+          if (channel && channel.type !== 'UNKNOWN' && channelTypes && (channelEnum ? channelTypes.includes(resolveChannelType(channel.type)) : channelTypes.includes(channel.type))) {
             baseOption.channel = channel as GuildBasedChannel;
             baseOption.value = channel.id;
             optionsResult[index] = baseOption;
