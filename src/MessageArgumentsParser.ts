@@ -10,6 +10,7 @@ import {
   mentionToMember,
   mentionToChannel,
   mentionToRole,
+  resolveChannelType,
 } from './utils/DiscordUtils';
 import SubcommandableCommand from './structures/commands/SubcommandableCommand';
 import SubCommand from './structures/commands/SubCommand';
@@ -91,10 +92,10 @@ export default class MessageArgumentsParser {
           const channel = await mentionToChannel(input, guild);
 
           // ? Channel required but no channel found, exit
-          if (!channel && (expected.required || expected.channelTypes)) return false;
+          if (!channel && (expected.required || expected.channel_types)) return false;
 
           // ? Channel not required but found, channel types not specified, push
-          if (channel && !expected.channelTypes) {
+          if (channel && !expected.channel_types) {
             baseOption.channel = channel as GuildBasedChannel;
             baseOption.value = channel.id;
             optionsResult[index] = baseOption;
@@ -102,7 +103,7 @@ export default class MessageArgumentsParser {
           }
 
           // ? Channel found and of types specified, push
-          if (channel && channel.type !== 'UNKNOWN' && expected.channelTypes && expected.channelTypes.includes(channel.type)) {
+          if (channel && channel.type !== 'UNKNOWN' && expected.channel_types && expected.channel_types.includes(resolveChannelType(channel.type))) {
             baseOption.channel = channel as GuildBasedChannel;
             baseOption.value = channel.id;
             optionsResult[index] = baseOption;

@@ -23,6 +23,8 @@ import {
   UserManager,
   Util,
 } from 'discord.js';
+import { ChannelTypes } from 'discord.js/typings/enums';
+
 import { BaseOptions, CommandData, ProcessedPermission } from '../structures/types';
 import CommandSource from '../structures/commands/CommandSource';
 
@@ -185,4 +187,36 @@ export async function mentionToRole(input:string | Snowflake | Role, guild: Guil
   if (!snowflake) return null;
 
   return await tryFetch(snowflake, guild.roles) as Role | null;
+}
+
+/**
+ * Resolves ChannelType enum key to enum value
+ * ? This looks kind of cursed, but it seems to be the only way.
+ * ? This will stay here until Discord.js v14, see https://github.com/discordjs/discord.js/blob/main/packages/discord.js/src/util/EnumResolvers.js#L50-L80
+ */
+export function resolveChannelType(key: keyof typeof ChannelTypes): Exclude<ChannelTypes, ChannelTypes.UNKNOWN> {
+  switch (key) {
+    case 'GUILD_TEXT':
+      return ChannelTypes.GUILD_TEXT;
+    case 'DM':
+      return ChannelTypes.DM;
+    case 'GUILD_VOICE':
+      return ChannelTypes.GUILD_VOICE;
+    case 'GROUP_DM':
+      return ChannelTypes.GROUP_DM;
+    case 'GUILD_CATEGORY':
+      return ChannelTypes.GUILD_CATEGORY;
+    case 'GUILD_NEWS':
+      return ChannelTypes.GUILD_NEWS;
+    case 'GUILD_NEWS_THREAD':
+      return ChannelTypes.GUILD_NEWS_THREAD;
+    case 'GUILD_PUBLIC_THREAD':
+      return ChannelTypes.GUILD_PUBLIC_THREAD;
+    case 'GUILD_PRIVATE_THREAD':
+      return ChannelTypes.GUILD_PRIVATE_THREAD;
+    case 'GUILD_STAGE_VOICE':
+      return ChannelTypes.GUILD_STAGE_VOICE;
+    default:
+      throw new Error(`Could not resolve enum value for ${key}`);
+  }
 }
