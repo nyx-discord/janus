@@ -61,14 +61,13 @@ export default class MessageArgumentsParser {
     const optionsResult: CommandInteractionOption[] = [];
     let resolvedResult: CommandInteractionResolvedData;
 
-    const success = await asyncEvery<string>(this.args, async (input, index) => {
+    const success = await asyncEvery<ApplicationCommandOptionData>(this.original, async (expected, index) => {
       // ? Because of the promises the function sometimes repeats itself, so this check is needed
       // eslint-disable-next-line no-param-reassign
       if (optionsResult[index]) index += 1;
 
-      if (index >= this.original.length) return true; // ? Ignore extra parameters
+      const input = this.args[index];
 
-      const expected = this.original[index] as ApplicationCommandOptionData;
       if (!input && 'required' in expected && expected.required) return false;
 
       const baseOption: CommandInteractionOption = { name: expected.name, type: (expected.type as ApplicationCommandOptionType) };
