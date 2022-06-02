@@ -13,11 +13,12 @@
 </p>
 
 <p align="center">
+  <img src="https://img.shields.io/github/workflow/status/Amgelo563/nyx/Build?logo=github&style=for-the-badge" alt="Build Status" />
   <a href="https://github.com/Amgelo563/nyx/blob/main/LICENSE">
-    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Nyx is released under the MIT license." />
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge" alt="Nyx is released under the MIT license." />
   </a>
-  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
-  <img src="https://img.shields.io/badge/Forks-welcome-brightgreen.svg" alt="PRs welcome!" />
+  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge" alt="PRs welcome!" />
+  <img src="https://img.shields.io/badge/Forks-welcome-brightgreen.svg?style=for-the-badge" alt="Forks welcome!" />
 </p>
 
 ## 📚 Introduction
