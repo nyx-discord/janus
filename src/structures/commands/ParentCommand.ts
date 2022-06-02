@@ -7,9 +7,9 @@ import Command, { CommandSubclass } from './Command';
 import SubCommand, { SubCommandSubclass } from './SubCommand';
 import { SubclassConstructor } from '../types';
 
-export type SubcommandableCommandSubclass = SubclassConstructor<typeof ParentCommand>;
+export type ParentCommandSubclass = SubclassConstructor<typeof ParentCommand>;
 
-/** A template class representing a Subcommandable Command (Command which contains subcommands) */
+/** A template class representing a ParentCommand Command (Command which contains subcommands) */
 export default abstract class ParentCommand extends Command {
   /** The executed subcommand */
   subCommand!: SubCommand;

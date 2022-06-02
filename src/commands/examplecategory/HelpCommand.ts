@@ -7,7 +7,7 @@ import {
 import Command, { CommandSubclass } from '../../structures/commands/Command';
 import { toTitleCase } from '../../utils/StringUtils';
 
-import ParentCommand, { SubcommandableCommandSubclass } from '../../structures/commands/ParentCommand';
+import ParentCommand, { ParentCommandSubclass } from '../../structures/commands/ParentCommand';
 import { CommandData } from '../../structures/types';
 import Bot from '../../Bot';
 
@@ -67,9 +67,9 @@ export default class HelpCommand extends Command {
 
       if (!subCommandName || !(FoundCommand instanceof ParentCommand)) return this.reply(await FoundCommand.getUsage(this.prefix));
 
-      const SubcommandableCommandClass = FoundCommand as unknown as SubcommandableCommandSubclass;
+      const ParentCommandClass = FoundCommand as unknown as ParentCommandSubclass;
 
-      const commandInstance = new SubcommandableCommandClass(this.bot, commandName, this.source, this.prefix, this.options);
+      const commandInstance = new ParentCommandClass(this.bot, commandName, this.source, this.prefix, this.options);
       const FoundSubCommand = commandInstance.getSubCommand(subCommandName);
 
       if (!FoundSubCommand) return this.reply(await FoundCommand.getUsage(this.prefix));
@@ -108,7 +108,7 @@ export default class HelpCommand extends Command {
 
         const focusedCommand = interaction.options.getString('command');
         if (!focusedCommand) return options;
-        const command = bot.commands.getCommands().get(focusedCommand) as unknown as SubcommandableCommandSubclass;
+        const command = bot.commands.getCommands().get(focusedCommand) as unknown as ParentCommandSubclass;
         if (!command || !command.getSubCommands) return options;
         return command.getSubCommands().map((subcommand) => subcommand.data.names[0]);
       }
