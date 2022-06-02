@@ -7,10 +7,10 @@ import Command, { CommandSubclass } from './Command';
 import SubCommand, { SubCommandSubclass } from './SubCommand';
 import { SubclassConstructor } from '../types';
 
-export type SubcommandableCommandSubclass = SubclassConstructor<typeof SubcommandableCommand>;
+export type SubcommandableCommandSubclass = SubclassConstructor<typeof ParentCommand>;
 
 /** A template class representing a Subcommandable Command (Command which contains subcommands) */
-export default abstract class SubcommandableCommand extends Command {
+export default abstract class ParentCommand extends Command {
   /** The executed subcommand */
   subCommand!: SubCommand;
 
@@ -57,7 +57,7 @@ export default abstract class SubcommandableCommand extends Command {
   public getSubCommand(name: string): SubCommand | null {
     if (this.subCommand) return this.subCommand;
 
-    for (const SC of (this.getConstructor() as unknown as typeof SubcommandableCommand).getSubCommands()) {
+    for (const SC of (this.getConstructor() as unknown as typeof ParentCommand).getSubCommands()) {
       if (SC.data.names.includes(name)) {
         this.subCommand = new SC(this.bot, this.source, this.prefix, this.getConstructor());
         return this.subCommand;

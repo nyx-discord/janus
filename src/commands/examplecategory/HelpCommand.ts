@@ -7,7 +7,7 @@ import {
 import Command, { CommandSubclass } from '../../structures/commands/Command';
 import { toTitleCase } from '../../utils/StringUtils';
 
-import SubcommandableCommand, { SubcommandableCommandSubclass } from '../../structures/commands/SubcommandableCommand';
+import ParentCommand, { SubcommandableCommandSubclass } from '../../structures/commands/ParentCommand';
 import { CommandData } from '../../structures/types';
 import Bot from '../../Bot';
 
@@ -65,7 +65,7 @@ export default class HelpCommand extends Command {
     if (FoundCommand) {
       const subCommandName = this.options.getString('subcommand');
 
-      if (!subCommandName || !(FoundCommand instanceof SubcommandableCommand)) return this.reply(await FoundCommand.getUsage(this.prefix));
+      if (!subCommandName || !(FoundCommand instanceof ParentCommand)) return this.reply(await FoundCommand.getUsage(this.prefix));
 
       const SubcommandableCommandClass = FoundCommand as unknown as SubcommandableCommandSubclass;
 

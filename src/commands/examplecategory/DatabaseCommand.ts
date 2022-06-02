@@ -1,9 +1,9 @@
 import { CommandData } from '../../structures/types';
-import SubcommandableCommand from '../../structures/commands/SubcommandableCommand';
+import ParentCommand from '../../structures/commands/ParentCommand';
 import DatabaseGetSubcommand from './databaseSubcommands/DatabaseGetSubcommand';
 import DatabaseSetSubcommand from './databaseSubcommands/DatabaseSetSubcommand';
 
-export default class DatabaseCommand extends SubcommandableCommand {
+export default class DatabaseCommand extends ParentCommand {
   static override data: CommandData = {
     names: ['database'],
     description: 'Example of a command using prisma\'s database system.',

@@ -1,5 +1,5 @@
 import { AutocompleteInteraction } from 'discord.js';
-import SubcommandableCommand from '../../structures/commands/SubcommandableCommand';
+import ParentCommand from '../../structures/commands/ParentCommand';
 import Event from '../../structures/Event';
 import { SubclassConstructor } from '../../structures/types';
 
@@ -10,12 +10,12 @@ export default class AutocompleteResponder extends Event {
     const commandInput = [interaction.commandName, interaction.options.getSubcommand(false)];
 
     const mainCommand = this.bot.commands.getCommands()
-      .get(commandInput.shift() as string) as unknown as SubclassConstructor<typeof SubcommandableCommand>;
+      .get(commandInput.shift() as string) as unknown as SubclassConstructor<typeof ParentCommand>;
     let command = mainCommand;
     if (commandInput.shift()) {
       command = mainCommand
         .getSubCommands()
-        .find((subcommand) => subcommand.data.names[0] === commandInput[0]) as unknown as SubclassConstructor<typeof SubcommandableCommand>;
+        .find((subcommand) => subcommand.data.names[0] === commandInput[0]) as unknown as SubclassConstructor<typeof ParentCommand>;
     }
 
     const focusedOption = interaction.options.getFocused(true);

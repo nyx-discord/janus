@@ -23,7 +23,7 @@ import {
   mentionToRole,
   resolveChannelType,
 } from './utils/DiscordUtils';
-import SubcommandableCommand from './structures/commands/SubcommandableCommand';
+import ParentCommand from './structures/commands/ParentCommand';
 import SubCommand from './structures/commands/SubCommand';
 import { SubclassConstructor } from './structures/types';
 import Command from './structures/commands/Command';
@@ -172,7 +172,7 @@ export default class MessageArgumentsParser {
         }
 
         case 'SUB_COMMAND': {
-          const SubcommandClass: typeof SubCommand | undefined = (this.command as unknown as typeof SubcommandableCommand)
+          const SubcommandClass: typeof SubCommand | undefined = (this.command as unknown as typeof ParentCommand)
             .getSubCommands()
             .find((subcommand) => subcommand.data.names.includes(input));
           if (!SubcommandClass) return false;
