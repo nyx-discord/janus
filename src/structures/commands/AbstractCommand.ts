@@ -15,10 +15,13 @@ import {
   BaseOptions,
   BaseAdditions,
   CommandData,
+  SubclassConstructor,
 } from '../types';
 import CommandSource from './CommandSource';
 import { Colors, Symbols } from '../../utils/Constants';
 import { getMessageOptions, sendTemporal } from '../../utils/DiscordUtils';
+
+export type AbstractCommandSubclass = SubclassConstructor<typeof AbstractCommand>;
 
 /* A Command, Subcommand group or SubCommand */
 export default abstract class AbstractCommand {
@@ -37,7 +40,7 @@ export default abstract class AbstractCommand {
   /** Prefix used to call the command or main command */
   protected prefix: string;
 
-  protected constructor(
+  constructor(
     bot: Bot,
     source: CommandSource,
     prefix: string,
@@ -65,7 +68,7 @@ export default abstract class AbstractCommand {
   public abstract execute(): Promise<unknown>;
 
   /** This lets access static members from a non static view (https://github.com/Microsoft/TypeScript/issues/3841) */
-  protected getConstructor() {
+  public getConstructor() {
     return Object.getPrototypeOf(this).constructor;
   }
 

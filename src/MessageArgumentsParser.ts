@@ -25,6 +25,7 @@ import {
 } from './utils/DiscordUtils';
 import SubcommandableCommand from './structures/commands/SubcommandableCommand';
 import SubCommand from './structures/commands/SubCommand';
+import { SubclassConstructor } from './structures/types';
 import Command from './structures/commands/Command';
 
 // ? An async Array#every (https://advancedweb.hu/how-to-use-async-functions-with-array-some-and-every-in-javascript/)
@@ -50,12 +51,12 @@ export default class MessageArgumentsParser {
   private readonly original: ApplicationCommandOptionData[];
 
   /** The name of the command */
-  private readonly command: typeof Command | typeof SubcommandableCommand;
+  private readonly command: SubclassConstructor<typeof Command>;
 
   constructor(
     message: Message<true>,
     args: string[],
-    command: typeof Command | typeof SubcommandableCommand,
+    command: SubclassConstructor<typeof Command>,
     original: ApplicationCommandOptionData[],
   ) {
     this.message = message;
@@ -171,7 +172,7 @@ export default class MessageArgumentsParser {
         }
 
         case 'SUB_COMMAND': {
-          const SubcommandClass: typeof SubCommand | undefined = (this.command as typeof SubcommandableCommand)
+          const SubcommandClass: typeof SubCommand | undefined = (this.command as unknown as typeof SubcommandableCommand)
             .getSubCommands()
             .find((subcommand) => subcommand.data.names.includes(input));
           if (!SubcommandClass) return false;

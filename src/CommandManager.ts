@@ -1,28 +1,32 @@
 import { ApplicationCommandDataResolvable, Collection } from 'discord.js';
 import fs from 'fs';
 
-import Command from './structures/commands/Command';
-import BotType from './Bot';
 import ApplicationCommand from './structures/commands/ApplicationCommand';
 import { getApplicationCommands } from './utils/CommandUtils';
+import Bot from './Bot';
+import AbstractCommand from './structures/commands/AbstractCommand';
+import { SubclassConstructor } from './structures/types';
+import { CommandSubclass } from './structures/commands/Command';
+
+export type AbstractCommandSub = SubclassConstructor<typeof AbstractCommand>;
 
 export default class CommandManager {
   /** The bot that instanciated this manager */
-  private readonly bot: BotType;
+  private readonly bot: Bot;
 
   /** Array of all the available command classes */
-  private readonly commandClasses: typeof Command[] = [];
+  private readonly commandClasses: AbstractCommandSub[] = [];
 
   /** Collection of <Category, Commands from that category> */
-  private readonly categories: Collection<string, typeof Command[]> = new Collection();
+  private readonly categories: Collection<string, AbstractCommandSub[]> = new Collection();
 
   /** Array of all the available main command names */
   private readonly mainCommands: string[] = [];
 
   /** Collection of <Command name|alias, Command class> */
-  private readonly commands: Collection<string, typeof Command> = new Collection<string, typeof Command>();
+  private readonly commands: Collection<string, AbstractCommandSub> = new Collection();
 
-  constructor(bot: BotType) {
+  constructor(bot: Bot) {
     this.bot = bot;
   }
 
@@ -44,7 +48,7 @@ export default class CommandManager {
         try {
           // ? Eslint is right about this one, but I haven't found any other good way to achieve this
           // eslint-disable-next-line global-require,import/no-dynamic-require
-          const command: typeof Command = require(path).default;
+          const command: AbstractCommandSub = require(path).default;
           category.push(command);
           this.mainCommands.push(command.data.names[0]);
           for (const name of command.data.names) {
@@ -67,7 +71,7 @@ export default class CommandManager {
 
   /** Loads ApplicationCommands. */
   private async loadApplicationCommands(): Promise<void> {
-    const commands: Collection<string, ApplicationCommand> = getApplicationCommands(this.getCommandClasses());
+    const commands: Collection<string, ApplicationCommand> = getApplicationCommands(this.getCommandClasses() as unknown as CommandSubclass[]);
 
     const commandManager = this.bot.client.application?.commands;
     if (!commandManager) return;
@@ -77,22 +81,22 @@ export default class CommandManager {
   }
 
   /** Get the array of all the available command classes */
-  getCommandClasses() {
+  getCommandClasses(): AbstractCommandSub[] {
     return this.commandClasses;
   }
 
   /** Get the collection of <Category, Commands from that category> */
-  getCategories(): Collection<string, typeof Command[]> {
+  getCategories(): Collection<string, AbstractCommandSub[]> {
     return this.categories;
   }
 
   /** Get the collection of <Command name|alias, Command class> */
-  getCommands(): Collection<string, typeof Command> {
+  getCommands(): Collection<string, AbstractCommandSub> {
     return this.commands;
   }
 
   /** Get the array of all the available main command names */
-  getMainCommands() {
+  getMainCommands(): string[] {
     return this.mainCommands;
   }
 }

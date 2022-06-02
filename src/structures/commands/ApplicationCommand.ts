@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionData, ApplicationCommandType } from 'discord.js';
-import Command from './Command';
+import { CommandSubclass } from './Command';
 
 /* An Application Command ready to be processed and registered for Discord */
 export default class ApplicationCommand {
@@ -15,7 +15,7 @@ export default class ApplicationCommand {
   /* The options used to register this Application Command (only for Slash Commands) */
   public options: ApplicationCommandOptionData[] | undefined;
 
-  constructor(command: typeof Command, type: ApplicationCommandType) {
+  constructor(command: CommandSubclass, type: ApplicationCommandType) {
     this.type = type;
     [this.name] = command.data.names;
     if (type === 'CHAT_INPUT') {

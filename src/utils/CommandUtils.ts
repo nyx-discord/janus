@@ -1,5 +1,5 @@
 import { Collection, Message } from 'discord.js';
-import Command from '../structures/commands/Command';
+import { CommandSubclass } from '../structures/commands/Command';
 import ApplicationCommand from '../structures/commands/ApplicationCommand';
 import { ProcessedMessageCommand } from '../structures/types';
 
@@ -29,7 +29,7 @@ export function getCommandName(message: Message, prefixes: string[]): ProcessedM
 }
 
 /** Get the application commands based on command classes */
-export function getApplicationCommands(commands: typeof Command[]): Collection<string, ApplicationCommand> {
+export function getApplicationCommands(commands: CommandSubclass[]): Collection<string, ApplicationCommand> {
   const result: Collection<string, ApplicationCommand> = new Collection();
   for (const command of commands) {
     result.set(`CHAT_INPUT:${command.data.names[0]}`, new ApplicationCommand(command, 'CHAT_INPUT'));

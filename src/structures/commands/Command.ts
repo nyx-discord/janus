@@ -4,10 +4,11 @@ import {
 } from 'discord.js';
 
 import AbstractCommand from './AbstractCommand';
-
 import CommandSource from './CommandSource';
-
 import Bot from '../../Bot';
+import { SubclassConstructor } from '../types';
+
+export type CommandSubclass = SubclassConstructor<typeof Command>;
 
 /* A fully executable Command by the CommandManager */
 export default abstract class Command extends AbstractCommand {

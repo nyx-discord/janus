@@ -7,6 +7,8 @@ import { getCommandName } from '../../utils/CommandUtils';
 import Event from '../../structures/Event';
 import MessageArgumentsParser from '../../MessageArgumentsParser';
 import { split } from '../../utils/StringUtils';
+import Command from '../../structures/commands/Command';
+import { SubclassConstructor } from '../../structures/types';
 
 export default class CommandsExecutor extends Event {
   override async run(message: Message) {
@@ -15,7 +17,7 @@ export default class CommandsExecutor extends Event {
     const commands = this.bot.commands.getCommands();
     if (!parsedMessage.isCommand) return;
 
-    const CommandClass = commands.get(parsedMessage.name as string);
+    const CommandClass = commands.get(parsedMessage.name as string) as unknown as SubclassConstructor<typeof Command>;
     if (!CommandClass) return;
 
     const missingPerms = canMemberExecute(message.member, CommandClass.data);
@@ -52,8 +54,6 @@ ${missingPerms.missingPerms}
       return;
     }
 
-    // FIXME The type is somehow wrong here, CommandClass appears as AbstractCommand, when it's actually a subclass of it.
-    // @ts-ignore See above
     const cmd = new CommandClass(
       this.bot,
       parsedMessage.name,

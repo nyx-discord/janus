@@ -4,10 +4,10 @@ import {
   ApplicationCommandOptionData,
 } from 'discord.js';
 
-import Command from '../../structures/commands/Command';
+import Command, { CommandSubclass } from '../../structures/commands/Command';
 import { toTitleCase } from '../../utils/StringUtils';
 
-import SubcommandableCommand from '../../structures/commands/SubcommandableCommand';
+import SubcommandableCommand, { SubcommandableCommandSubclass } from '../../structures/commands/SubcommandableCommand';
 import { CommandData } from '../../structures/types';
 import Bot from '../../Bot';
 
@@ -53,7 +53,7 @@ export default class HelpCommand extends Command {
       let description = '';
 
       category.forEach((categoryCommand) => {
-        description += `**${this.prefix}${categoryCommand.getOverview()}\n`;
+        description += `**${this.prefix}${(categoryCommand as unknown as CommandSubclass).getOverview()}\n`;
       });
 
       return this.reply(new MessageEmbed()
@@ -67,13 +67,13 @@ export default class HelpCommand extends Command {
 
       if (!subCommandName || !(FoundCommand instanceof SubcommandableCommand)) return this.reply(await FoundCommand.getUsage(this.prefix));
 
-      // FIXME The type is somehow wrong here, CommandClass appears as AbstractCommand, when it's actually a subclass of it.
-      // @ts-ignore See above
-      const commandInstance = new FoundCommand(this.bot, commandName, this.source, this.prefix);
+      const SubcommandableCommandClass = FoundCommand as unknown as SubcommandableCommandSubclass;
+
+      const commandInstance = new SubcommandableCommandClass(this.bot, commandName, this.source, this.prefix, this.options);
       const FoundSubCommand = commandInstance.getSubCommand(subCommandName);
 
       if (!FoundSubCommand) return this.reply(await FoundCommand.getUsage(this.prefix));
-      return this.reply(await FoundSubCommand.constructor.getUsage(this.prefix));
+      return this.reply(await FoundSubCommand.getConstructor().getUsage(this.prefix));
     }
 
     return this.sendUsage();
@@ -108,7 +108,7 @@ export default class HelpCommand extends Command {
 
         const focusedCommand = interaction.options.getString('command');
         if (!focusedCommand) return options;
-        const command = bot.commands.getCommands().get(focusedCommand) as typeof SubcommandableCommand;
+        const command = bot.commands.getCommands().get(focusedCommand) as unknown as SubcommandableCommandSubclass;
         if (!command || !command.getSubCommands) return options;
         return command.getSubCommands().map((subcommand) => subcommand.data.names[0]);
       }

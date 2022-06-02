@@ -1,9 +1,14 @@
-import { GuildMember, Interaction, MessageEmbed } from 'discord.js';
+import {
+  CommandInteractionOptionResolver,
+  GuildMember,
+  Interaction,
+  MessageEmbed,
+} from 'discord.js';
 
 import CommandSource from '../../structures/commands/CommandSource';
 import { Symbols, Colors } from '../../utils/Constants';
 import { sendTemporal, canMemberExecute } from '../../utils/DiscordUtils';
-import Command from '../../structures/commands/Command';
+import { CommandSubclass } from '../../structures/commands/Command';
 import Event from '../../structures/Event';
 
 export default class SlashCommandsExecutor extends Event {
@@ -11,7 +16,7 @@ export default class SlashCommandsExecutor extends Event {
     if (!interaction.isCommand() && !interaction.isContextMenu()) return;
 
     const name = interaction.commandName;
-    const CommandClass = this.bot.commands.getCommands().get(name) as typeof Command;
+    const CommandClass = this.bot.commands.getCommands().get(name) as unknown as CommandSubclass;
 
     if (CommandClass === undefined) return;
 
@@ -33,9 +38,7 @@ ${missingPerms.missingPerms}
     }
     const source = new CommandSource(interaction);
 
-    // FIXME The type is somehow wrong here, CommandClass appears as AbstractCommand, when it's actually a subclass of it.
-    // @ts-ignore See above
-    const cmd = new CommandClass(this.bot, name, source, '/', interaction.options);
+    const cmd = new CommandClass(this.bot, name, source, '/', interaction.options as CommandInteractionOptionResolver);
     await cmd.execute();
   }
 }

@@ -1,9 +1,12 @@
 import { MessageEmbed } from 'discord.js';
 
 import AbstractCommand from './AbstractCommand';
-import Command from './Command';
+import Command, { CommandSubclass } from './Command';
 import Bot from '../../Bot';
 import CommandSource from './CommandSource';
+import { SubclassConstructor } from '../types';
+
+export type SubCommandSubclass = SubclassConstructor<typeof SubCommand>;
 
 /** An abstract SubCommand belonging to a Command parent. */
 export default abstract class SubCommand extends AbstractCommand {
@@ -13,7 +16,7 @@ export default abstract class SubCommand extends AbstractCommand {
   }
 
   /** This subcommand's parent */
-  public static parentCommand: typeof Command;
+  public static parentCommand: CommandSubclass;
 
   /** Get an embed about this subcommand's usage */
   public static override getUsage(prefix: string): MessageEmbed {

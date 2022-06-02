@@ -79,3 +79,7 @@ export type BaseOptions =
 
 /** Additions that can be added to BaseOptions */
 export type BaseAdditions = MessageEmbed | MessageAttachment | MessageActionRow;
+
+/** Type of constructor of a subclass of an abstract class */
+export type SubclassConstructor<TCtor extends abstract new (...args: any[]) => any> =
+  Pick<TCtor, keyof TCtor> & (new (...args: ConstructorParameters<TCtor>) => InstanceType<TCtor>);

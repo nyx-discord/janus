@@ -3,8 +3,11 @@ import {
   MessageEmbed,
 } from 'discord.js';
 
-import Command from './Command';
-import SubCommand from './SubCommand';
+import Command, { CommandSubclass } from './Command';
+import SubCommand, { SubCommandSubclass } from './SubCommand';
+import { SubclassConstructor } from '../types';
+
+export type SubcommandableCommandSubclass = SubclassConstructor<typeof SubcommandableCommand>;
 
 /** A template class representing a Subcommandable Command (Command which contains subcommands) */
 export default abstract class SubcommandableCommand extends Command {
@@ -12,7 +15,7 @@ export default abstract class SubcommandableCommand extends Command {
   subCommand!: SubCommand;
 
   /** List of Subcommand Classes belonging to this Command */
-  static getSubCommands(): Array<typeof SubCommand> {
+  static getSubCommands(): SubCommandSubclass[] {
     return [];
   }
 
@@ -20,7 +23,7 @@ export default abstract class SubcommandableCommand extends Command {
     return this.getSubCommands().map((c) => {
       // ? We're mapping all the subcommands, so it's a valid usage here
       // eslint-disable-next-line no-param-reassign
-      c.parentCommand = this as typeof Command;
+      c.parentCommand = this as unknown as CommandSubclass;
       return {
         type: 'SUB_COMMAND',
         name: c.data.names[0],
@@ -56,8 +59,6 @@ export default abstract class SubcommandableCommand extends Command {
 
     for (const SC of (this.getConstructor() as unknown as typeof SubcommandableCommand).getSubCommands()) {
       if (SC.data.names.includes(name)) {
-        // FIXME The type is somehow wrong here, SC appears as SubCommand, when it's actually a subclass of it.
-        // @ts-ignore See above
         this.subCommand = new SC(this.bot, this.source, this.prefix, this.getConstructor());
         return this.subCommand;
       }
