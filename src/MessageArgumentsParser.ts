@@ -85,6 +85,7 @@ export default class MessageArgumentsParser {
 
       switch (expected.type) {
         case 'STRING': {
+          if (!(expected.autocomplete) && expected.choices && !expected.choices.map((choice) => choice.name).includes(input)) return false;
           baseOption.value = input;
           optionsResult[index] = (baseOption);
           return true;
