@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint . --ext .ts",
     "watch": "tsc -w",
-    "start": "tsc && node dist/index.js"
+    "start": "tsc && node dist/index.js",
+    "build": "tsc"
   },
   "engines": {
     "node": ">=16.6.0"
