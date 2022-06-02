@@ -12,6 +12,8 @@ jobs:
           node-version: 16
       - name: Install modules
         run: npm install
+      - name: Copy configuration
+        run: cp exampleconfig.json config.json
       - name: Run ESLint
         run: npx eslint . --ext .ts
       - name: Compile Typescript
