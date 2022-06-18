@@ -42,6 +42,7 @@ export default class ScheduleManager {
         /** Run this task manually instead of using cron's builtIn startNow just in case the Schedule uses the job property */
         // eslint-disable-next-line no-await-in-loop
         if (scheduleInstance.runOnLoad) await scheduleInstance.run();
+        cronJob.start();
       } catch (error) {
         this.bot.logger.error(`There was an error while loading schedule ${schedule}.`, error);
       }
