@@ -48,13 +48,10 @@ export default class Bot {
     this.logger.log('Starting...');
     await this.client.login(this.options.token);
     this.logger.info('Logged into Discord.');
-
-    await Promise.all([
-      this.prisma.$connect(),
-      this.commands.init(),
-      this.events.init(),
-      this.schedules.init(),
-    ]);
+    await this.prisma.$connect();
+    await this.schedules.init();
+    await this.events.init();
+    await this.commands.init();
 
     this.logger.log(`The bot has started! Prefixes: '${this.options.prefixes}'`);
 
