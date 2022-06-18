@@ -24,7 +24,7 @@ export default abstract class Schedule {
   public abstract run(): Promise<unknown>;
 
   /** Interval between each run of this schedule. This needs to follow {@link http://crontab.org/ Cron syntax}. {@link https://crontab.guru/ See more here}. */
-  public abstract interval: string;
+  public abstract interval: string | Date;
 
   /** Whether to run this schedule on bot load */
   public abstract runOnLoad: boolean;
