@@ -21,13 +21,13 @@
   "dependencies": {
     "@prisma/client": "^3.12.0",
     "colors": "^1.4.0",
+    "cron": "^2.0.0",
     "discord.js": "^13.6.0",
-    "node-cron": "^3.0.0",
     "prisma": "^3.12.0",
     "tracer": "^1.1.5"
   },
   "devDependencies": {
-    "@types/node-cron": "3.0.1",
+    "@types/cron": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "5.21.0",
     "@typescript-eslint/parser": "5.21.0",
     "eslint": "8.16.0",

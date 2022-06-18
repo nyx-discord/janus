@@ -1,15 +1,16 @@
 import { Collection } from 'discord.js';
 import fs from 'fs';
-import { schedule as cronSchedule, ScheduledTask, validate as validateSchedule } from 'node-cron';
+import { CronJob } from 'cron';
 
 import BotType from './Bot';
+import { ScheduleSubclass } from './structures/Schedule';
 
 export default class ScheduleManager {
   /** The bot that instanciated this manager */
   private readonly bot: BotType;
 
-  /** Collection of <Schedule name, ScheduledTask> */
-  private readonly schedules: Collection<string, ScheduledTask> = new Collection<string, ScheduledTask>();
+  /** Collection of <Schedule name, CronJob> */
+  protected readonly schedules: Collection<string, CronJob> = new Collection<string, CronJob>();
 
   constructor(bot: BotType) {
     this.bot = bot;
@@ -26,16 +27,21 @@ export default class ScheduleManager {
       try {
         // ? Eslint is right about this one, but I haven't found any other good way to achieve this
         // eslint-disable-next-line global-require,import/no-dynamic-require
-        const ImportedSchedule = require(`${schedulesPath}/${schedule}`).default;
-        const ScheduleInstance = new ImportedSchedule(this.bot);
-        if (validateSchedule(ScheduleInstance.interval)) {
-          const cronTask = cronSchedule(ScheduleInstance.interval, ScheduleInstance.run);
-          this.schedules.set(ImportedSchedule.name, cronTask);
-          if (ScheduleInstance.runOnLoad) ScheduleInstance.run();
-        } else {
-          this.bot.logger.error(`Schedule ${schedule}'s interval is not valid.`);
-          return;
-        }
+        const ImportedSchedule = require(`${schedulesPath}/${schedule}`).default as ScheduleSubclass;
+        const scheduleInstance = new ImportedSchedule(this.bot);
+        const cronJob = new CronJob(
+          scheduleInstance.interval,
+          scheduleInstance.run,
+          scheduleInstance.onComplete,
+          undefined,
+          undefined,
+          scheduleInstance,
+        );
+        scheduleInstance.job = cronJob;
+        this.schedules.set(ImportedSchedule.name, cronJob);
+        /** Run this task manually instead of using cron's builtIn startNow just in case the Schedule uses the job property */
+        // eslint-disable-next-line no-await-in-loop
+        if (scheduleInstance.runOnLoad) await scheduleInstance.run();
       } catch (error) {
         this.bot.logger.error(`There was an error while loading schedule ${schedule}.`, error);
       }
