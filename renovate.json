@@ -3,5 +3,19 @@
     "config:base",
     ":semanticCommits",
     ":semanticCommitTypeAll(build)"
+  ],
+  "packageRules": [
+    {
+      "matchDepTypes": ["devDependencies"],
+      "matchPackagePatterns": ["lint"],
+      "automergeType": "branch",
+      "automerge": true
+    },
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchCurrentVersion": "!/^0/",
+      "automergeType": "branch",
+      "automerge": true
+    }
   ]
 }
