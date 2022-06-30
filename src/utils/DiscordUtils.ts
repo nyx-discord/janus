@@ -14,7 +14,7 @@ import {
   MessageActionRow,
   MessageAttachment,
   MessageEmbed,
-  MessageOptions,
+  MessageOptions, MessagePayload,
   ReplyMessageOptions,
   Role,
   RoleManager,
@@ -42,7 +42,7 @@ export async function sendTemporal(
 ) {
   const messageOptions = options;
   (messageOptions as InteractionReplyOptions).ephemeral = true;
-  const temporalMessage = await reference.reply(messageOptions);
+  const temporalMessage = await reference.reply(messageOptions as MessagePayload);
   if (!temporalMessage) return;
 
   setTimeout(async () => temporalMessage.delete(), 5000);
@@ -121,7 +121,7 @@ export function getMessageOptions(
     (options as ReplyMessageOptions).failIfNotExists ??= false;
     (options as ReplyMessageOptions).allowedMentions ??= { repliedUser: false };
   }
-  return options;
+  return options as MessageOptions;
 }
 
 /** Parse a possible mention to Snowflake or null if no mention found */

@@ -6,6 +6,7 @@ import {
   Message,
   MessageActionRow,
   MessageAttachment,
+  MessageEditOptions,
   MessageEmbed,
   MessageOptions,
 } from 'discord.js';
@@ -87,7 +88,7 @@ export default abstract class AbstractCommand {
     if (!this.response && this.source.getRaw() instanceof Message) throw new Error('There\'s no response to edit.');
     const messageOptions = this.getMessageOptions(message, ...additions);
 
-    if (!this.source.isInteraction) return this.response.edit(messageOptions);
+    if (!this.source.isInteraction) return this.response.edit(messageOptions as MessageEditOptions);
     await (this.source.getRaw() as CommandInteraction).editReply(messageOptions);
     return this.response;
   }
