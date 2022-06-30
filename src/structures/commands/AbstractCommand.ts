@@ -6,8 +6,8 @@ import {
   Message,
   MessageActionRow,
   MessageAttachment,
-  MessageEditOptions,
   MessageEmbed,
+  MessageEditOptions,
   MessageOptions,
 } from 'discord.js';
 
@@ -84,6 +84,7 @@ export default abstract class AbstractCommand {
     ...additions: Array<BaseAdditions>
   ): Promise<Message> {
     const messageOptions = this.getMessageOptions(message, ...additions);
+    if (this.response || (this.source.isInteraction && (this.source.getRaw() as CommandInteraction).deferred)) return this.edit(messageOptions);
     this.response = await this.source.reply(messageOptions);
     return this.response;
   }
@@ -94,7 +95,7 @@ export default abstract class AbstractCommand {
     const messageOptions = this.getMessageOptions(message, ...additions);
 
     if (!this.source.isInteraction) return this.response.edit(messageOptions as MessageEditOptions);
-    await (this.source.getRaw() as CommandInteraction).editReply(messageOptions);
+    this.response = await (this.source.getRaw() as CommandInteraction).editReply(messageOptions) as Message;
     return this.response;
   }
 
@@ -106,9 +107,9 @@ export default abstract class AbstractCommand {
       .setDescription('An internal error happened while executing that command.');
     if (message) errorEmbed.addField('Message', `\`\`\`${message}\`\`\``);
 
-    if (this.response) return this.edit(errorEmbed);
+    if (this.response || (this.source.isInteraction && (this.source.getRaw() as CommandInteraction).deferred)) return this.edit(errorEmbed);
 
-    return sendTemporal((this.source.getRaw() as Message | CommandInteraction), { embeds: [errorEmbed] });
+    return sendTemporal(this.source, { embeds: [errorEmbed] });
   }
 
   /** Send an embed about this command's usage */

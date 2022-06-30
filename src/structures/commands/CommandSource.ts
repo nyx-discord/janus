@@ -68,16 +68,15 @@ export default class CommandSource {
 
       return await this.interaction.reply(messageOptions as InteractionReplyOptions) as unknown as Message;
     }
-    this.response = await this.message.reply(messageOptions as ReplyMessageOptions);
+    this.response = await this.message.reply(messageOptions as MessageOptions);
     return this.response;
   }
 
   /** Defers according to the source's type */
-  public async defer(): Promise<void> {
+  public async defer(ephemeral: boolean = false): Promise<void> {
     if (this.isInteraction) {
       if (this.interaction.deferred) return;
-
-      await this.interaction.deferReply();
+      await this.interaction.deferReply({ ephemeral });
       return;
     }
     await this.message.channel.sendTyping();

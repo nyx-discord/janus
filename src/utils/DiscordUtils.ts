@@ -2,19 +2,16 @@ import {
   Channel,
   ChannelManager,
   Client,
-  CommandInteraction,
   Constants,
-  ContextMenuInteraction,
   DiscordAPIError,
   Guild,
   GuildMember,
   GuildMemberManager,
   InteractionReplyOptions,
-  Message,
   MessageActionRow,
   MessageAttachment,
   MessageEmbed,
-  MessageOptions, MessagePayload,
+  MessageOptions,
   ReplyMessageOptions,
   Role,
   RoleManager,
@@ -37,12 +34,12 @@ const SnowflakeRegexes = new Map([
 const snowflakeRegex = /^\d+$/;
 
 export async function sendTemporal(
-  reference: CommandInteraction | Message | ContextMenuInteraction,
+  reference: CommandSource,
   options: MessageOptions | InteractionReplyOptions,
 ) {
   const messageOptions = options;
   (messageOptions as InteractionReplyOptions).ephemeral = true;
-  const temporalMessage = await reference.reply(messageOptions as MessagePayload);
+  const temporalMessage = await reference.reply(messageOptions);
   if (!temporalMessage) return;
 
   setTimeout(async () => temporalMessage.delete(), 5000);

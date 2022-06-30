@@ -20,6 +20,7 @@ export default class SlashCommandsExecutor extends Event {
 
     if (CommandClass === undefined) return;
 
+    const source = new CommandSource(interaction);
     const missingPerms = canMemberExecute(interaction.member as GuildMember | null, CommandClass.data);
     if (!missingPerms.canExecute) {
       const errorResponse = new MessageEmbed()
@@ -33,11 +34,9 @@ ${missingPerms.missingPerms}
 \`\`\`
 `);
       }
-      await sendTemporal(interaction, { content: `<@${interaction.user.id}>`, embeds: [errorResponse] });
+      await sendTemporal(source, { content: `<@${interaction.user.id}>`, embeds: [errorResponse] });
       return;
     }
-    const source = new CommandSource(interaction);
-
     const cmd = new CommandClass(this.bot, name, source, '/', interaction.options as CommandInteractionOptionResolver);
     await cmd.execute();
   }

@@ -20,6 +20,7 @@ export default class CommandsExecutor extends Event {
     const CommandClass = commands.get(parsedMessage.name as string) as unknown as SubclassConstructor<typeof Command>;
     if (!CommandClass) return;
 
+    const source = new CommandSource(message);
     const missingPerms = canMemberExecute(message.member, CommandClass.data);
     if (!missingPerms.canExecute) {
       const errorResponse = new MessageEmbed()
@@ -33,13 +34,10 @@ ${missingPerms.missingPerms}
 \`\`\`
 `);
       }
-      await sendTemporal(message, { content: `<@${message.author.id}>`, embeds: [errorResponse] });
+      await sendTemporal(source, { content: `<@${message.author.id}>`, embeds: [errorResponse] });
       return;
     }
-
     if (!parsedMessage.prefix || !parsedMessage.name || !parsedMessage.args) return;
-
-    const source = new CommandSource(message);
 
     const MessageArgsParser = new MessageArgumentsParser(
       source.getRaw() as Message<true>,
