@@ -14,6 +14,7 @@ module.exports = {
   },
   rules: {
     "@typescript-eslint/no-unused-vars": 0,
+    "linebreak-style": ["error", (process.platform === "win32" ? "windows" : "unix")],
     "import/prefer-default-export": 0,
     "import/no-cycle": 0,
     "react/jsx-filename-extension": 0,
