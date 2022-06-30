@@ -8,7 +8,7 @@ import {
   ReplyMessageOptions,
   InteractionReplyOptions,
   ButtonInteraction,
-  WebhookEditMessageOptions,
+  WebhookEditMessageOptions, MessageEditOptions,
 } from 'discord.js';
 
 type SupportedInteractions = CommandInteraction | ContextMenuInteraction | ButtonInteraction;
@@ -62,13 +62,13 @@ export default class CommandSource {
     if (this.isInteraction) {
       (messageOptions as InteractionReplyOptions).fetchReply = true;
 
-      if (this.interaction.replied) return await this.interaction.followUp(messageOptions) as Message;
+      if (this.interaction.replied) return await this.interaction.followUp(messageOptions as InteractionReplyOptions) as Message;
 
       if (this.interaction.deferred) return await this.interaction.editReply(messageOptions) as Message;
 
-      return await this.interaction.reply(messageOptions) as unknown as Message;
+      return await this.interaction.reply(messageOptions as InteractionReplyOptions) as unknown as Message;
     }
-    this.response = await this.message.reply(messageOptions);
+    this.response = await this.message.reply(messageOptions as ReplyMessageOptions);
     return this.response;
   }
 
@@ -88,6 +88,6 @@ export default class CommandSource {
     if (this.isInteraction) {
       return this.interaction.editReply(options) as Promise<Message>;
     }
-    return this.response.edit(options);
+    return this.response.edit(options as MessageEditOptions);
   }
 }
