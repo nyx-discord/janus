@@ -73,6 +73,11 @@ export default abstract class AbstractCommand {
     return Object.getPrototypeOf(this).constructor;
   }
 
+  /** Defer this command's response */
+  protected async defer(): Promise<void> {
+    await this.source.defer(this.getConstructor().data.ephemeral ?? false);
+  }
+
   /** Reply to the source of execution */
   protected async reply(
     message: BaseOptions,
