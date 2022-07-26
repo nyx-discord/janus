@@ -29,7 +29,7 @@ export default class Bot {
   readonly schedules: ScheduleManager;
 
   /** The Logger for this bot */
-  readonly logger: Tracer.Logger;
+  readonly logger: Tracer.Logger<'log' | 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal'>;
 
   /** The Prisma client for this bot */
   readonly prisma: PrismaClient;
