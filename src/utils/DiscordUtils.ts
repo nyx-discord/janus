@@ -40,7 +40,7 @@ export async function sendTemporal(
   const messageOptions = options;
   (messageOptions as InteractionReplyOptions).ephemeral = true;
   const temporalMessage = await reference.reply(messageOptions);
-  if (!temporalMessage) return;
+  if (!temporalMessage || reference.isInteraction) return;
 
   setTimeout(async () => temporalMessage.delete(), 5000);
 }
