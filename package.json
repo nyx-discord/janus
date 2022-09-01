@@ -19,11 +19,11 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@prisma/client": "4.3.0",
+    "@prisma/client": "4.3.1",
     "colors": "1.4.0",
     "cron": "2.1.0",
     "discord.js": "13.10.3",
-    "prisma": "4.3.0",
+    "prisma": "4.3.1",
     "tracer": "1.1.6"
   },
   "devDependencies": {
