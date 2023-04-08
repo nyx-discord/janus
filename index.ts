@@ -24,7 +24,7 @@ new Bot({
   presence: { status: 'dnd', activities: [{ type: 'WATCHING', name: 'Loading...' }] },
   partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'USER'],
 }, {
-  format: '[{{timestamp}}] Nyx | {{title}} | {{message}}',
+  format: '[{{timestamp}}] Janus | {{title}} | {{message}}',
   dateformat: 'HH:MM',
   // ? This is the actual usage of preprocess, so eslint is disabled here
   // eslint-disable-next-line no-param-reassign

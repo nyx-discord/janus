@@ -1,5 +1,5 @@
 {
-  "name": "nyx",
+  "name": "janus",
   "version": "1.1.0",
   "description": "A base for developing Discord.js bots, written in TypeScript.",
   "main": "index.js",

@@ -1,21 +1,21 @@
 <p align="center">
   <a href="#">
-    <img alt="Nyx" src="https://cdn.discordapp.com/attachments/707047887200321609/963261054249492490/nyx.png"/>
+    <img alt="Janus Logo" src="https://github.com/nyx-discord/janus/blob/main/logo.png"/>
   </a>
 </p>
 
 ---
 
 <p align="center">
-  Nyx is a Discord bot template written in Typescript, supporting most of Discord.js' features alongside tools useful for bot development.
+  Janus is a Discord bot template written in Typescript, supporting most of Discord.js' features alongside tools useful for bot development.
   <br>
-  <a href = "https://github.com/Amgelo563/nyx/blob/main/README_es.md"><b>🇪🇸 README en Español</b></a>
+  <a href = "https://github.com/nyx-discord/janus/blob/main/README_es.md"><b>🇪🇸 README en Español</b></a>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/github/workflow/status/Amgelo563/nyx/Build?logo=github&style=for-the-badge" alt="Build Status" />
-  <a href="https://github.com/Amgelo563/nyx/blob/main/LICENSE">
-    <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge" alt="Nyx is released under the MIT license." />
+  <img src="https://img.shields.io/github/workflow/status/Amgelo563/janus/Build?logo=github&style=for-the-badge" alt="Build Status" />
+  <a href="https://github.com/nyx-discord/janus/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge" alt="Janus is released under the MIT license." />
   </a>
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge" alt="PRs welcome!" />
   <img src="https://img.shields.io/badge/Forks-welcome-brightgreen.svg?style=for-the-badge" alt="Forks welcome!" />
@@ -60,13 +60,13 @@ All of these features are included on the template. You can modify each of them 
 * *(Theorically but not really practical?)* Support for multiple bots running at once.
 
 ## 📖 Usage
-[Refer to the Wiki for steps to use the template.](https://github.com/Amgelo563/nyx/wiki)
+[Refer to the Wiki for steps to use the template.](https://github.com/Amgelo563/janus/wiki)
 
 ## 🌐 License
 
-[LICENSE](https://github.com/Amgelo563/nyx/blob/main/LICENSE)
+[LICENSE](https://github.com/Amgelo563/janus/blob/main/LICENSE)
 
-Nyx is licensed under the MIT License, linked above.
+Janus is licensed under the MIT License, linked above.
 
 If you don't want to bother reading it all, here's what you need to know:
 

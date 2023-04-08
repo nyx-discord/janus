@@ -1,21 +1,21 @@
 <p align="center">
   <a href="#">
-    <img alt="Nyx" src="https://cdn.discordapp.com/attachments/707047887200321609/963261054249492490/nyx.png"/>
+    <img alt="Janus" src="https://github.com/nyx-discord/janus/blob/main/logo.png"/>
   </a>
 </p>
 
 ---
 
 <p align="center">
-  Nyx es una plantilla de Bots de Discord escrita en Typescript, que soporta la mayoría de las características de Discord.js junto con otras herramientas útiles para desarrollo de bots.
+  Janus es una plantilla de Bots de Discord escrita en Typescript, que soporta la mayoría de las características de Discord.js junto con otras herramientas útiles para desarrollo de bots.
   <br>
-  <a href = "https://github.com/Amgelo563/nyx/blob/main/README.md"><b>🇺🇸 English README</b></a>
+  <a href = "https://github.com/nyx-discord/janus/blob/main/README.md"><b>🇺🇸 English README</b></a>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/github/workflow/status/Amgelo563/nyx/Build?logo=github&style=for-the-badge" alt="Build Status" />
-  <a href="https://github.com/Amgelo563/nyx/blob/main/LICENSE">
-    <img src="https://img.shields.io/badge/licencia-MIT-blue.svg?style=for-the-badge" alt="Nyx usa la licencia MIT." />
+  <a href="https://github.com/nyx-discord/janus/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/licencia-MIT-blue.svg?style=for-the-badge" alt="Janus usa la licencia MIT." />
   </a>
   <img src="https://img.shields.io/badge/PRs-bienvenidas-brightgreen.svg?style=for-the-badge" alt="PRs bienvenidas!" />
   <img src="https://img.shields.io/badge/Forks-bienvenidos-brightgreen.svg?style=for-the-badge" alt="Forks bienvenidos!" />
@@ -64,9 +64,9 @@ Todas estas características están incluidas en la plantilla. Puedes modificar 
 
 ## 🌐 Licencia
 
-[LICENSE](https://github.com/Amgelo563/nyx/blob/main/LICENSE)
+[LICENSE](https://github.com/nyx-discord/janus/blob/main/LICENSE)
 
-Nyx está licensiado bajo la Licencia MIT, especificada arriba.
+Janus está licensiado bajo la Licencia MIT, especificada arriba.
 
 Si no quieres leer toda la licencia, este es un resumen:
 
